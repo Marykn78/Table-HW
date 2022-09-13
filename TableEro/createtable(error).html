@@ -36,6 +36,7 @@
             <div class=" col-12 col-md-6 mb-3 mt-4">
                 <!-- <input type="submit" id="submit" class="btn btn-primary" onclick=addData() value="save"> -->
                 <button  id="submit" class="btn btn-primary" onclick="addData()">save</button>
+                <button class="btn btn-primary" onclick="checkitem()">update</button>
             </div>
         </div>
     
@@ -72,7 +73,7 @@
         const code=document.querySelector('#code');
         const email=document.querySelector('#email');
         const phone=document.querySelector('#phone');
-        // let updateid =0; 
+        let updateid =0; 
 
         let mainData=[
             {id:1,fname: 'maryam',lname: 'kohan', code: 'abc', email: 'm@gmail.com', phone: '09124344344'}
@@ -90,6 +91,7 @@
                     <td>${item.phone}</td>
                     <td>
                     <button onclick="deletebtn(${item.id})" class="btn btn-danger">delete</button>
+                    <button onclick="update(${item.id})" class="btn btn-success">update</button>
                     </td>
                 </tr>
                 `
@@ -107,7 +109,32 @@
             clear();
             render(mainData);
         }
-
+        const deletebtn = (id) =>{
+            mainData =mainData.filter(item =>item.id !== id)
+            render(mainData)
+        }
+        const update = (id) =>{
+            let updaterow = mainData.filter(item =>item.id === id)[0]
+            updateid =updaterow.id;
+            fname.value =updaterow.fname;
+            lname.value =updaterow.lname;
+            code.value =updaterow.code;
+            email.value =updaterow.email;
+            phone.value=updaterow.phone;
+        }
+        const checkitem =()=>{
+            // submit.value ='update'
+            mainData= mainData.map(item=>item.id === updateid ?{
+                id:updateid,
+                fname:fname.value,
+                lname:lname.value,
+                code:code.value,
+                email:email.value,
+                phone:phone.value
+            }:item)
+            clear();
+            render(mainData);
+        }
         const clear =() =>{
             fname.value=''
             lname.value=''
@@ -115,24 +142,6 @@
             email.value=''
             phone.value=''
         }
-        const deletebtn = (id) =>{
-            mainData =mainData.filter(item =>item.id !== id)
-            render(mainData)
-        }
-        // const update = (id) =>{
-        //     updateid =id;
-        //     let updateData = mainData.filter(item=>item.id === updateid ?{
-        //         id:updateid,
-        //         fname:fname.value,
-        //         lname:lname.value,
-        //         code:code.value,
-        //         email:email.value,
-        //         phone:phone.value
-        //     }:item)
-        // }
-        // const checkitem =()=>{
-
-        // }
         render(mainData);
 
         
