@@ -34,7 +34,8 @@
                 <input type="tel" class="form-control" id="phone" name="phone" placeholder="name@example.com">
             </div>
             <div class=" col-12 col-md-6 mb-3 mt-4">
-                <input type="submit" id="submit" class="btn btn-primary" value="save">
+                <!-- <input type="submit" id="submit" class="btn btn-primary" onclick=addData() value="save"> -->
+                <button  id="submit" class="btn btn-primary" onclick="addData()">save</button>
             </div>
         </div>
     </form>
@@ -46,12 +47,13 @@
                     <td>first-name</td>
                     <td>last-name</td>
                     <td>code</td>
-                    <td>phone</td>
                     <td>email</td>
+                    <td>phone</td>
                     <td></td>
                 </tr>
             </thead>
             <tbody id="tbody">
+                
             </tbody>
         </table>
     </div>
@@ -62,48 +64,77 @@
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
     crossorigin="anonymous"></script>
     <script>
-        const form =document.querySelector('#form');
-        const table=document.querySelector('#table-submit');
-        const submit_btn =document.querySelector('#submit')
-        const id =document.querySelector('#id');
+        // const form =document.querySelector('#form');
+        // const table=document.querySelector('#table-submit');
+        const submit =document.querySelector('#submit');
         const tbody =document.querySelector('#tbody');
-        let keys=["id","first-name","last-name","code","email","phone"]
-        form.addEventListener('submit',(e)=>{
-            e.preventDefault();
-            const fname=document.querySelector('#first-name').value;
-            const lname=document.querySelector('#last-name').value;
-            const code=document.querySelector('#code').value;
-            const email=document.querySelector('#email').value;
-            const phone=document.querySelector('#phone').value;
-            // const tbody=document.querySelector('.tbody');
-            // const tr=document.createElement('tr');
-            table.innerHTML +=`
-            <tbody>
+        const fname=document.querySelector('#first-name');
+        const lname=document.querySelector('#last-name');
+        const code=document.querySelector('#code');
+        const email=document.querySelector('#email');
+        const phone=document.querySelector('#phone');
+        let updateid =0; 
+
+        let mainData=[
+            {id:1,fname: 'maryam',lname: 'kohan', code: 'abc', email: 'm@gmail.com', phone: '09124344344'}
+        ]
+        const render = (Data) => {
+            // e.preventDefault();
+            Data.map(item => (
+                tbody.innerHTML +=`
                 <tr>
-                    <td>${Math.floor(Math.random()*100)}</td>
-                    <td>${fname}</td>
-                    <td>${lname}</td>
-                    <td>${code}</td>
-                    <td>${phone}</td>
-                    <td>${email}</td>
+                    <td>${item.id}</td>
+                    <td>${item.fname}</td>
+                    <td>${item.lname}</td>
+                    <td>${item.code}</td>
+                    <td>${item.email}</td>
+                    <td>${item.phone}</td>
                     <td>
-                        <button onclick="deletebtn()" class="btn btn-danger delete-item">delete</button>
-                        <button class="btn btn-success">update</button>
+                    <button onclick="deletebtn(${item.id})" class="btn btn-danger">delete</button>
                     </td>
                 </tr>
-            </tbody>
-            `
-            e.target.reset();
-            submit_btn.value="save";
-            e.preventDefault();
-            
-        })
-        const deletebtn =(e)=>{
-            // console.log('hi')
-            const row = e.target.parentElement.parentElement;
-            console.log(row)
-            // table.removeChild(e.target.parentElement.parentElement);
+                `
+            ));
         }
+        const addData = (e) => {
+            e.preventDefault();
+            console.log('hi');
+            mainData =[...mainData, { 
+                id:Math.floor(Math.random() *100),
+                fname:fname.value,
+                lname:lname.value,
+                code:code.value,
+                email:email.value,
+                phone:phone.value
+            }]
+            render(mainData);
+        }
+
+        // const clear =() =>{
+        //     fname.value=''
+        //     lname.value=''
+        //     code.value=''
+        //     email.value=''
+        //     phone.value=''
+        // }
+        // const deletebtn = (id) =>{
+        //     mainData =mainData.filter(item =>item.id !== id)
+        //     render(mainData)
+        // }
+        // const update = (id) =>{
+        //     updateid =id;
+        //     let updateData = mainData.filter(item=>item.id === updateid ?{
+        //         id:updateid,
+        //         fname:fname.value,
+        //         lname:lname.value,
+        //         code:code.value,
+        //         email:email.value,
+        //         phone:phone.value
+        //     }:item)
+        // }
+        render(mainData);
+
+        
 
         
     </script>
