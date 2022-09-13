@@ -10,7 +10,7 @@
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 <body>
-    <form id="form" action="">
+    
         <div class="row m-5">
             <input type="text" hidden id="id" name="id">
             <div class=" col-12 col-md-6 mb-3">
@@ -38,7 +38,7 @@
                 <button  id="submit" class="btn btn-primary" onclick="addData()">save</button>
             </div>
         </div>
-    </form>
+    
     <div class=" shadow p-3 mb-5 rounded mt-2">
         <table id="table-submit" class="table table-striped">
             <thead class="bg-dark text-light">
@@ -64,8 +64,7 @@
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
     crossorigin="anonymous"></script>
     <script>
-        // const form =document.querySelector('#form');
-        // const table=document.querySelector('#table-submit');
+        
         const submit =document.querySelector('#submit');
         const tbody =document.querySelector('#tbody');
         const fname=document.querySelector('#first-name');
@@ -73,13 +72,13 @@
         const code=document.querySelector('#code');
         const email=document.querySelector('#email');
         const phone=document.querySelector('#phone');
-        let updateid =0; 
+        // let updateid =0; 
 
         let mainData=[
             {id:1,fname: 'maryam',lname: 'kohan', code: 'abc', email: 'm@gmail.com', phone: '09124344344'}
         ]
         const render = (Data) => {
-            // e.preventDefault();
+            tbody.innerHTML=''
             Data.map(item => (
                 tbody.innerHTML +=`
                 <tr>
@@ -96,10 +95,8 @@
                 `
             ));
         }
-        const addData = (e) => {
-            e.preventDefault();
-            console.log('hi');
-            mainData =[...mainData, { 
+        const addData = () => {
+            mainData =[...mainData,{ 
                 id:Math.floor(Math.random() *100),
                 fname:fname.value,
                 lname:lname.value,
@@ -107,20 +104,21 @@
                 email:email.value,
                 phone:phone.value
             }]
+            clear();
             render(mainData);
         }
 
-        // const clear =() =>{
-        //     fname.value=''
-        //     lname.value=''
-        //     code.value=''
-        //     email.value=''
-        //     phone.value=''
-        // }
-        // const deletebtn = (id) =>{
-        //     mainData =mainData.filter(item =>item.id !== id)
-        //     render(mainData)
-        // }
+        const clear =() =>{
+            fname.value=''
+            lname.value=''
+            code.value=''
+            email.value=''
+            phone.value=''
+        }
+        const deletebtn = (id) =>{
+            mainData =mainData.filter(item =>item.id !== id)
+            render(mainData)
+        }
         // const update = (id) =>{
         //     updateid =id;
         //     let updateData = mainData.filter(item=>item.id === updateid ?{
@@ -131,6 +129,9 @@
         //         email:email.value,
         //         phone:phone.value
         //     }:item)
+        // }
+        // const checkitem =()=>{
+
         // }
         render(mainData);
 
