@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <form id="form" action="">
+            <div class="row m-5">
+                <!-- <input type="text" hidden id="id" name="id"> -->
+                <div class=" col-12 col-md-6 mb-3">
+                    <label for="first-name" class="form-label">first-name</label>
+                    <input type="text" class="form-control input" id="first-name" name="first-name" placeholder="maryam">
+                </div>
+                <div class=" col-12 col-md-6 mb-3">
+                    <label for="last-name" class="form-label">last-name</label>
+                    <input type="text" class="form-control input" id="last-name" name="last-name" placeholder="kohan">
+                </div>
+                <div class=" col-12 col-md-6 mb-3">
+                    <label for="code" class="form-label">code</label>
+                    <input type="password" class="form-control input" id="code" name="code" placeholder="">
+                </div>
+                <div class=" col-12 col-md-6 mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control input" id="email" name="email" placeholder="name@example.com">
+                </div>
+                <div class=" col-12 col-md-6 mb-3">
+                    <label for="phone" class="form-label">phone-number</label>
+                    <input type="tel" class="form-control input" id="phone" name="phone" placeholder="0912xxxxxxxx">
+                </div>
+                <div class=" col-12 col-md-6 mb-3 mt-4">
+                    <input type="submit" id="submit" class="btn btn-primary" value="save">
+                </div>
+            </div>
+        </form>
+        <table id="table-submit" class="table table-striped">
+            <thead class="bg-dark text-light">
+                <tr>
+                    <td>id</td>
+                    <td>first-name</td>
+                    <td>last-name</td>
+                    <td>code</td>
+                    <td>email</td>
+                    <td>phone</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+    crossorigin="anonymous"></script>
+
+    <script>
+        const form =document.querySelector('#form');
+        const table=document.querySelector('#table-submit');
+        const tbody =document.querySelector('#tbody')
+        const input =document.querySelectorAll(".input")
+        // const input =document.getElementsByTagName('input')
+
+        //select inputs
+        const fname=document.querySelector('#first-name');
+        const lname=document.querySelector('#last-name');
+        const code=document.querySelector('#code');
+        const email=document.querySelector('#email');
+        const phone=document.querySelector('#phone');
+
+        //function add input to form
+        form.addEventListener('submit',addForm);
+        function addForm(e){
+            e.preventDefault();
+            //create td for table
+            const trow =document.createElement('tr')
+            const tdid =document.createElement('td');
+            const tdfirst =document.createElement('td');
+            const tdlast =document.createElement('td');
+            const tdcode =document.createElement('td');
+            const tdemail =document.createElement('td');
+            const tdphone =document.createElement('td');
+            const tdbutton =document.createElement('td');
+            //create button for table
+            const btnDelete=document.createElement('button');
+            btnDelete.className="btn btn-danger delete-item";
+            btnDelete.innerText="delete";
+            const btnUpdate=document.createElement('button');
+            btnUpdate.className="btn btn-success update-item";
+            btnUpdate.innerText="update";
+            //append value to td
+            tdid.appendChild(document.createTextNode((Math.floor(Math.random() * 1000))));
+            tdfirst.appendChild(document.createTextNode(fname.value));
+            tdlast.appendChild(document.createTextNode(lname.value));
+            tdcode.appendChild(document.createTextNode(code.value));
+            tdemail.appendChild(document.createTextNode(email.value));
+            tdphone.appendChild(document.createTextNode(phone.value));
+            tdbutton.appendChild(btnDelete);
+            tdbutton.appendChild(btnUpdate);
+
+            //append td to row
+            trow.appendChild(tdid)
+            trow.appendChild(tdfirst)
+            trow.appendChild(tdlast)
+            trow.appendChild(tdcode)
+            trow.appendChild(tdemail)
+            trow.appendChild(tdphone)
+            trow.appendChild(tdbutton)
+            tbody.appendChild(trow)
+
+            e.target.reset();
+            submit.value="save";
+        }
+        //delete row of form
+        function removeRow(e){
+            tbody.removeChild(e.target.parentElement.parentElement);  
+        }
+        tbody.addEventListener('click',removeRow);
+        //update row
+        function updaterow(e){
+            const row=e.target.parentElement.parentElement;
+            for (let i = 1; i < row.childNodes.length - 1; i++){
+                input[i-1].value=row.childNodes[i].innerText;
+            }
+            submit.value="update";
+            e.target.parentElement.parentElement.remove();
+            // e.preventDefault();
+        }
+        tbody.addEventListener('click',updaterow); 
+
+    </script>
+</body>
+</html>
